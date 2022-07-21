@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_php/homepage.dart';
+import 'package:flutter_php/login1.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -15,7 +17,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   void initState() {
-
     getadata();
   }
 
@@ -30,29 +31,7 @@ class MyApp extends StatelessWidget {
           appBar: AppBar(
             title: Text("Flutter And Php"),
           ),
-          body: FutureBuilder(
-            future: getadata(),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.data == null) {
-                return Center(
-                  child: Container(
-                    child: Text("Data Is Loading Please Wait"),
-                  ),
-                );
-              } else {
-                return ListView.builder(
-                  itemCount: snapshot.data?.lenght,
-                  itemBuilder: (context, index) {
-                     return ListTile(
-                      title: Text(snapshot.data[index].id),
-                      // subtitle: Text(snapshot.data[index].name),
-                      // trailing: Text(snapshot.data[index].age),
-                    );
-                  },
-                );
-              }
-            },
-          ),
+          body: login1()
         ));
   }
 }

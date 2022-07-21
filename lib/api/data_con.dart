@@ -1,14 +1,18 @@
 class data_con {
-  final int id;
+  final String id;
   final String name;
-  final int age;
+  final String price;
 
-  data_con({required this.id, required this.name, required this.age});
+  data_con({
+    required this.id,
+    required this.name,
+    required this.price
+  });
   factory data_con.fromJson(Map<String, dynamic> json) {
     return data_con(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      age: json['age'] as int,
+      id: json['id'],
+      name: json['name'],
+      price: json['price'] ,
     );
   }
 }
