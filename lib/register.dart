@@ -2,22 +2,39 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_php/api/data_con.dart';
-import 'package:flutter_php/drawer.dart';
-import 'package:flutter_php/homepage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-class login1 extends StatefulWidget {
-  const login1({Key? key}) : super(key: key);
+class register extends StatefulWidget {
+  const register({Key? key}) : super(key: key);
 
   @override
-  State<login1> createState() => _login1State();
+  State<register> createState() => _registerState();
 }
 
-class _login1State extends State<login1> {
+class _registerState extends State<register> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  Future<void> insertdata() async {
+    if (email.text != "" && password.text != "") {
+      try {
+        String uri =
+            'https://mj09store.000webhostapp.com/register_or_not/login.php';
+        var res = await http.post(Uri.parse(uri),
+            body: {"email": email.text, "password": password.text});
+        var response = jsonDecode(res.body);
+        if (res.statusCode == 200) {
+          print(res.statusCode);
+        } else {
+          print("error");
+        }
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      Fluttertoast.showToast(msg: "Please Fill the details");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +45,16 @@ class _login1State extends State<login1> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Image.asset('asset/login.png'),
+              Image.asset('asset/reg.png'),
               SizedBox(
                 height: 20,
               ),
               Container(
                 alignment: Alignment.center,
                 height: 50,
-                width: 200,
+                width: 300,
                 child: Text(
-                  "Student Login",
+                  " Registration Form",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
               ),
@@ -72,8 +89,7 @@ class _login1State extends State<login1> {
                 width: 120,
                 child: ElevatedButton(
                     onPressed: () {
-                      // insertdata();
-                      checklogin();
+                      insertdata();
                     },
                     child: Text("Login")),
               )
@@ -82,30 +98,5 @@ class _login1State extends State<login1> {
         ),
       ),
     );
-  }
-
-  checklogin() async {
-    if (email.text != "" && password.text != "") {
-      // print(email.text);
-      try {
-        String uri =
-            'https://mj09store.000webhostapp.com/register_or_not/check_login.php';
-        var res = await http.post(Uri.parse(uri),
-            body: {"email": email.text, "password": password.text});
-        var response = jsonDecode(res.body);
-
-        // print(response);
-      } catch (e) {
-        // print(e);
-        print(email);
-        print(password);
-
-        if (e == "User Login Success") {
-          Fluttertoast.showToast(msg: "Please Fill the details");
-        }
-      }
-    } else {
-      Fluttertoast.showToast(msg: "Please Fill the details");
-    }
   }
 }

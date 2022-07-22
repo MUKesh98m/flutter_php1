@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_php/drawer.dart';
 import 'package:flutter_php/homepage.dart';
 import 'package:flutter_php/login1.dart';
 import 'package:http/http.dart' as http;
@@ -11,9 +12,14 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   void initState() {
@@ -28,10 +34,10 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.pink,
         ),
         home: Scaffold(
-          appBar: AppBar(
-            title: Text("Flutter And Php"),
-          ),
-          body: login1()
-        ));
+            appBar: AppBar(
+              title: Text("Flutter And Php"),
+            ),
+            drawer: drawer1(),
+            body: login1()));
   }
 }

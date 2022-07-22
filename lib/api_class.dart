@@ -6,19 +6,19 @@ import 'package:shimmer/shimmer.dart';
 
 import 'api/api_page.dart';
 
-class homepage extends StatefulWidget {
-  const homepage({Key? key}) : super(key: key);
-
+class api_class extends StatefulWidget {
+  const api_class(
+      {Key? key, required this.id, required this.name, required this.price})
+      : super(key: key);
+  final String id;
+  final String name;
+  final double price;
   @override
-  State<homepage> createState() => _homepageState();
+  State<api_class> createState() => _api_classState();
 }
 
-class _homepageState extends State<homepage> {
+class _api_classState extends State<api_class> {
   @override
-  void initState() {
-    getadata();
-  }
-
   Widget build(BuildContext context) {
     return Container(
       child: Card(
@@ -97,5 +97,3 @@ class _homepageState extends State<homepage> {
     );
   }
 }
-
-class secondapi extends MyApp {}
