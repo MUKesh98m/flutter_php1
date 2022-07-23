@@ -85,27 +85,23 @@ class _login1State extends State<login1> {
   }
 
   checklogin() async {
-    if (email.text != "" && password.text != "") {
-      // print(email.text);
+    if (email != "" && password != "") {
       try {
-        String uri =
-            'https://mj09store.000webhostapp.com/register_or_not/check_login.php';
-        var res = await http.post(Uri.parse(uri),
+        String url =
+            "https://mj09store.000webhostapp.com/register_or_not/check_login.php";
+        var res = await http.post(Uri.parse(url),
             body: {"email": email.text, "password": password.text});
         var response = jsonDecode(res.body);
-
-        // print(response);
+        response.close(force: true);
+        print("hi");
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => homepage()));
       } catch (e) {
-        // print(e);
-        print(email);
-        print(password);
+        print(e);
 
-        if (e == "User Login Success") {
-          Fluttertoast.showToast(msg: "Please Fill the details");
-        }
       }
     } else {
-      Fluttertoast.showToast(msg: "Please Fill the details");
+      print("by");
     }
   }
 }
