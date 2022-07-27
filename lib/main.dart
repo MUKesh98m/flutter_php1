@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_php/drawer.dart';
 import 'package:flutter_php/homepage.dart';
 import 'package:flutter_php/login1.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:flutter_php/register.dart';
 
-import 'api/api_page.dart';
-import 'api/data_con.dart';
+import 'forgot_password.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,9 +20,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
-  void initState() {
-    getadata();
-  }
+  // void initState() {
+  //   getadata();
+  // }
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,7 +35,6 @@ class _MyAppState extends State<MyApp> {
             appBar: AppBar(
               title: Text("Flutter And Php"),
             ),
-            drawer: drawer1(),
             body: login1()));
   }
 }

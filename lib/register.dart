@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_php/homepage.dart';
+import 'package:flutter_php/loginpagedetail.dart';
 import 'package:http/http.dart' as http;
 
 class register extends StatefulWidget {
@@ -30,9 +31,11 @@ class _registerState extends State<register> {
         }
       } catch (e) {
         print(e);
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => loginpagedetail()));
       }
     } else {
-      Fluttertoast.showToast(msg: "Please Fill the details");
+      print("Please Fill the details");
     }
   }
 
@@ -45,7 +48,7 @@ class _registerState extends State<register> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Image.asset('asset/reg.png'),
+              Image.asset('asset/reg.png', height: 150),
               SizedBox(
                 height: 20,
               ),
@@ -86,13 +89,17 @@ class _registerState extends State<register> {
                 height: 40,
               ),
               SizedBox(
-                width: 120,
-                child: ElevatedButton(
-                    onPressed: () {
-                      insertdata();
-                    },
-                    child: Text("Login")),
-              )
+                width: 100,
+                child:
+                      ElevatedButton(
+                          onPressed: () {
+                            insertdata();
+                          },
+                          child: Text("Login")),
+
+
+
+              ),
             ],
           ),
         ),

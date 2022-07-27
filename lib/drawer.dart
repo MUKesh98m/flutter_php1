@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_php/login1.dart';
+import 'package:flutter_php/loginpagedetail.dart';
 import 'package:flutter_php/register.dart';
 
 class drawer1 extends StatefulWidget {
-  const drawer1({Key? key}) : super(key: key);
+  final String email;
+
+  const drawer1({super.key, required this.email});
 
   @override
   State<drawer1> createState() => _drawer1State();
@@ -13,8 +15,8 @@ class drawer1 extends StatefulWidget {
 class _drawer1State extends State<drawer1> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Drawer(
+    return Scaffold(
+      body: Drawer(
         child: Column(
           children: [
             Container(
@@ -42,7 +44,7 @@ class _drawer1State extends State<drawer1> {
                           child: Container(
                               color: Colors.teal,
                               width: 250,
-                              child: Text("hi")),
+                              child: Text(widget.email)),
                         ),
                       ),
                     ],
@@ -65,8 +67,8 @@ class _drawer1State extends State<drawer1> {
               title: Text("Student Detail(Get)"),
               trailing: Icon(Icons.details),
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => login1()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => loginpagedetail()));
               },
             ),
           ],

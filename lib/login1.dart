@@ -4,9 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_php/api/data_con.dart';
 import 'package:flutter_php/drawer.dart';
+import 'package:flutter_php/forgot_password.dart';
 import 'package:flutter_php/homepage.dart';
+import 'package:flutter_php/loginpagedetail.dart';
+import 'package:flutter_php/register.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class login1 extends StatefulWidget {
   const login1({Key? key}) : super(key: key);
@@ -16,8 +21,37 @@ class login1 extends StatefulWidget {
 }
 
 class _login1State extends State<login1> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+
+  getemailvalue() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? emailvalue = pref.getString("emailvalue1");
+    return emailvalue;
+  }
+
+  setemailvalue() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("emailvalue1", "_email");
+  }
+
+  void dispose() {
+    _email.clear();
+    _password.clear();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkemailset();
+  }
+
+  checkemailset() async {
+    String email1 = await getemailvalue() ?? 0;
+    setState(() {
+      _email = _email;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +79,7 @@ class _login1State extends State<login1> {
                 height: 20,
               ),
               TextField(
-                controller: email,
+                controller: _email,
                 decoration: InputDecoration(
                   suffixIcon: Icon(Icons.email, color: Colors.red),
                   contentPadding: EdgeInsets.only(left: 30),
@@ -57,26 +91,78 @@ class _login1State extends State<login1> {
                 height: 30,
               ),
               TextField(
-                controller: password,
+                controller: _password,
                 decoration: InputDecoration(
-                  suffixIcon: Icon(Icons.password_sharp, color: Colors.red),
+                  suffixIcon: Icon(
+                    Icons.password_sharp,
+                    color: Colors.red,
+                  ),
                   contentPadding: EdgeInsets.only(left: 30),
                   hintText: "Password",
                   border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(
-                height: 40,
+                height: 30,
               ),
               SizedBox(
-                width: 120,
-                child: ElevatedButton(
+                // width: 10,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(Colors.red),
+                        ),
+                        onPressed: () {
+                          checklogin();
+                          dispose();
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            width: 85,
+                            child: Text(
+                              "Login",
+                              style: TextStyle(color: Colors.white),
+                            )),
+                      ),
+                      SizedBox(
+                        width: 70,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => forgot_password()));
+                        },
+                        child: Text(
+                          "Forgot Password?",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("don't have any account?"),
+                  TextButton(
                     onPressed: () {
-                      // insertdata();
-                      checklogin();
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => register()));
                     },
-                    child: Text("Login")),
-              )
+                    child: Text(
+                      "Create new",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -85,20 +171,34 @@ class _login1State extends State<login1> {
   }
 
   checklogin() async {
-    if (email != "" && password != "") {
+    if (_email != "" && _password != "") {
       try {
         String url =
             "https://mj09store.000webhostapp.com/register_or_not/check_login.php";
-        var res = await http.post(Uri.parse(url),
-            body: {"email": email.text, "password": password.text});
-        var response = jsonDecode(res.body);
-        response.close(force: true);
-        print("hi");
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => homepage()));
-      } catch (e) {
-        print(e);
+        var response = await http.post(Uri.parse(url),
+            body: {"email": _email.text, "password": _password.text});
 
+        // var res = jsonDecode(response.body);
+        print(response.toString());
+        if (response.statusCode == 200) {
+          print(response.statusCode);
+          // print(json.decode(response.body));
+          print(response.body);
+          if (response.body == "Success") {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => homepage()));
+          } else if (response.body == "Data not found") {
+            // print("invalid credentials");
+            Fluttertoast.showToast(msg: "invalid credentials");
+          }
+        } else {
+          print(response.statusCode);
+        }
+      } catch (e) {
+        var kk = e.toString();
+        print(kk);
+
+        // }
       }
     } else {
       print("by");

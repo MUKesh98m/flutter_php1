@@ -1,31 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_php/main.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'api/api_page.dart';
 import 'drawer.dart';
 
-class homepage extends StatefulWidget {
-  const homepage({Key? key}) : super(key: key);
+class usercredential extends StatefulWidget {
+  const usercredential({Key? key}) : super(key: key);
 
   @override
-  State<homepage> createState() => _homepageState();
+  State<usercredential> createState() => _usercredentialState();
 }
 
-class _homepageState extends State<homepage> {
+class _usercredentialState extends State<usercredential> {
   @override
-  void initState() {
-    getadata();
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: drawer1(
         email: '',
       ),
-      appBar: AppBar( title: Text("Flutter And Php"),),
       body: Container(
         child: Card(
           child: FutureBuilder(
