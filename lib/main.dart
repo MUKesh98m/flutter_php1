@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_php/drawer.dart';
 import 'package:flutter_php/homepage.dart';
 import 'package:flutter_php/login1.dart';
+import 'package:flutter_php/pdf.dart';
 import 'package:flutter_php/register.dart';
 
 import 'forgot_password.dart';
@@ -32,9 +33,9 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.pink,
         ),
         home: Scaffold(
-            appBar: AppBar(
-              title: Text("Flutter And Php"),
-            ),
-            body: login1()));
+            // appBar: AppBar(
+            //   title: Text("Flutter And Php"),
+            // ),
+            body: pdf()));
   }
 }
